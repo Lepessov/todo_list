@@ -97,12 +97,32 @@ class TaskController extends Controller
      *      @OA\RequestBody(
      *          required=true,
      *          description="Task data",
-     *          @OA\JsonContent(
-     *              required={"title", "description", "status"},
-     *              @OA\Property(property="title", type="string", example="Task title"),
-     *              @OA\Property(property="description", type="string", example="Task description"),
-     *              @OA\Property(property="status", type="string", enum={"todo", "in_progress", "done"})
-     *          )
+     *          @OA\MediaType(
+     *               mediaType="multipart/form-data",
+     *               @OA\Schema(
+     *                   @OA\Property(
+     *                       property="title",
+     *                       type="string",
+     *                       description="Title of the task",
+     *                   ),
+     *                   @OA\Property(
+     *                       property="description",
+     *                       type="string",
+     *                       description="Description of the task",
+     *                   ),
+     *                   @OA\Property(
+     *                       property="status",
+     *                       type="string",
+     *                       description="Status of the task (todo, in_progress, done)",
+     *                       enum={"todo", "in_progress", "done"}
+     *                   ),
+     *                   @OA\Property(
+     *                       property="file_path",
+     *                       type="file",
+     *                       description="File to upload"
+     *                   )
+     *               )
+     *           )
      *      ),
      *      @OA\Response(
      *          response=201,
@@ -113,6 +133,7 @@ class TaskController extends Controller
      *              @OA\Property(property="title", type="string", example="Task title"),
      *              @OA\Property(property="description", type="string", example="Task description"),
      *              @OA\Property(property="status", type="string", example="todo"),
+     *              @OA\Property(property="file_path", type="file", example="file path"),
      *              @OA\Property(property="created_at", type="string", format="date-time"),
      *              @OA\Property(property="updated_at", type="string", format="date-time")
      *          )
@@ -130,7 +151,16 @@ class TaskController extends Controller
      */
     public function store(CreateTaskRequest $request): JsonResponse
     {
-        $task = Task::create($request->validated());
+        $validatedData = $request->validated();
+
+        if ($request->hasFile('file_path')) {
+            $file = $request->file('file_path');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('uploads/tasks', $fileName);
+            $validatedData['file_path'] = $filePath;
+        }
+//dd($validatedData);
+        $task = Task::create($validatedData);
 
         return $this->successResponse($task, ResponseAlias::HTTP_CREATED);
     }
@@ -189,11 +219,31 @@ class TaskController extends Controller
      *      @OA\RequestBody(
      *          required=true,
      *          description="Task data",
-     *          @OA\JsonContent(
-     *              required={"title", "description", "status"},
-     *              @OA\Property(property="title", type="string", example="Updated Task title"),
-     *              @OA\Property(property="description", type="string", example="Updated Task description"),
-     *              @OA\Property(property="status", type="string", enum={"todo", "in_progress", "done"})
+     *          @OA\MediaType(
+     *               mediaType="multipart/form-data",
+     *               @OA\Schema(
+     *                   @OA\Property(
+     *                       property="title",
+     *                       type="string",
+     *                       description="Title of the task",
+     *                   ),
+     *                   @OA\Property(
+     *                       property="description",
+     *                       type="string",
+     *                       description="Description of the task",
+     *                   ),
+     *                   @OA\Property(
+     *                       property="status",
+     *                       type="string",
+     *                       description="Status of the task (todo, in_progress, done)",
+     *                       enum={"todo", "in_progress", "done"}
+     *                   ),
+     *                   @OA\Property(
+     *                       property="file_path",
+     *                       type="file",
+     *                       description="File to upload"
+     *                   )
+     *               )
      *          )
      *      ),
      *      @OA\Response(
@@ -219,7 +269,16 @@ class TaskController extends Controller
     {
         $task = Task::findOrFail($id);
 
-        $task->update($request->validated());
+        $validatedData = $request->validated();
+
+        if ($request->hasFile('file_path')) {
+            $file = $request->file('file_path');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('uploads/tasks', $fileName);
+            $validatedData['file_path'] = $filePath;
+        }
+
+        $task->update($validatedData);
 
         return $this->successResponse($task);
     }

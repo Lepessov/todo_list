@@ -255,29 +255,29 @@
                     "description": "Task data",
                     "required": true,
                     "content": {
-                        "application/json": {
+                        "multipart/form-data": {
                             "schema": {
-                                "required": [
-                                    "title",
-                                    "description",
-                                    "status"
-                                ],
                                 "properties": {
                                     "title": {
-                                        "type": "string",
-                                        "example": "Task title"
+                                        "description": "Title of the task",
+                                        "type": "string"
                                     },
                                     "description": {
-                                        "type": "string",
-                                        "example": "Task description"
+                                        "description": "Description of the task",
+                                        "type": "string"
                                     },
                                     "status": {
+                                        "description": "Status of the task (todo, in_progress, done)",
                                         "type": "string",
                                         "enum": [
                                             "todo",
                                             "in_progress",
                                             "done"
                                         ]
+                                    },
+                                    "file_path": {
+                                        "description": "File to upload",
+                                        "type": "file"
                                     }
                                 },
                                 "type": "object"
@@ -307,6 +307,10 @@
                                         "status": {
                                             "type": "string",
                                             "example": "todo"
+                                        },
+                                        "file_path": {
+                                            "type": "file",
+                                            "example": "file path"
                                         },
                                         "created_at": {
                                             "type": "string",
@@ -417,29 +421,29 @@
                     "description": "Task data",
                     "required": true,
                     "content": {
-                        "application/json": {
+                        "multipart/form-data": {
                             "schema": {
-                                "required": [
-                                    "title",
-                                    "description",
-                                    "status"
-                                ],
                                 "properties": {
                                     "title": {
-                                        "type": "string",
-                                        "example": "Updated Task title"
+                                        "description": "Title of the task",
+                                        "type": "string"
                                     },
                                     "description": {
-                                        "type": "string",
-                                        "example": "Updated Task description"
+                                        "description": "Description of the task",
+                                        "type": "string"
                                     },
                                     "status": {
+                                        "description": "Status of the task (todo, in_progress, done)",
                                         "type": "string",
                                         "enum": [
                                             "todo",
                                             "in_progress",
                                             "done"
                                         ]
+                                    },
+                                    "file_path": {
+                                        "description": "File to upload",
+                                        "type": "file"
                                     }
                                 },
                                 "type": "object"

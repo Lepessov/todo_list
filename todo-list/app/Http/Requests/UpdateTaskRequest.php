@@ -17,6 +17,7 @@ class UpdateTaskRequest extends FormRequest
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'status' => 'nullable|in:todo,in_progress,done',
+            'file_path' => 'nullable|file|max:10240',
         ];
     }
 
@@ -28,6 +29,8 @@ class UpdateTaskRequest extends FormRequest
             'title.max' => 'The title may not be greater than :max characters.',
             'description.string' => 'The description must be a string.',
             'status.in' => 'The status must be one of: todo, in_progress, done.',
+            'file_path.file' => 'The file must be a valid file.',
+            'file_path.max' => 'The file may not be greater than 10MB.',
         ];
     }
 }
