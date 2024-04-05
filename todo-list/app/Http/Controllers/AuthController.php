@@ -41,6 +41,6 @@ class AuthController extends Controller
 
         $token = $user->createToken('authToken')->plainTextToken;
 
-        return $this->successResponse(['token' => $token]);
+        return $this->successResponse(['token' => $token], ResponseAlias::HTTP_CREATED, APIMessageEntity::CREATED);
     }
 }

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\APIMessageEntity;
 use App\Http\Requests\CreateTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class TaskController extends Controller
 {
@@ -24,7 +26,7 @@ class TaskController extends Controller
     {
         $task = Task::create($request->validated());
 
-        return $this->successResponse($task);
+        return $this->successResponse($task, ResponseAlias::HTTP_CREATED);
     }
 
     public function show($id): JsonResponse
@@ -48,6 +50,6 @@ class TaskController extends Controller
         $task = Task::findOrFail($id);
         $task->delete();
 
-        return $this->successResponse([]);
+        return $this->successResponse([], ResponseAlias::HTTP_NO_CONTENT, APIMessageEntity::DELETED);
     }
 }
