@@ -6,6 +6,8 @@
       <sourceFolder url="file://$MODULE_DIR$/todo-list/database/factories" isTestSource="false" packagePrefix="Database\Factories\" />
       <sourceFolder url="file://$MODULE_DIR$/todo-list/database/seeders" isTestSource="false" packagePrefix="Database\Seeders\" />
       <sourceFolder url="file://$MODULE_DIR$/todo-list/tests" isTestSource="true" packagePrefix="Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/todo-list/vendor/brick/math" />
       <excludeFolder url="file://$MODULE_DIR$/todo-list/vendor/carbonphp/carbon-doctrine-types" />
       <excludeFolder url="file://$MODULE_DIR$/todo-list/vendor/composer" />
@@ -118,6 +120,11 @@
       <excludeFolder url="file://$MODULE_DIR$/todo-list/vendor/vlucas/phpdotenv" />
       <excludeFolder url="file://$MODULE_DIR$/todo-list/vendor/voku/portable-ascii" />
       <excludeFolder url="file://$MODULE_DIR$/todo-list/vendor/webmozart/assert" />
+      <excludeFolder url="file://$MODULE_DIR$/todo-list/vendor/darkaonline/l5-swagger" />
+      <excludeFolder url="file://$MODULE_DIR$/todo-list/vendor/doctrine/annotations" />
+      <excludeFolder url="file://$MODULE_DIR$/todo-list/vendor/psr/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/todo-list/vendor/swagger-api/swagger-ui" />
+      <excludeFolder url="file://$MODULE_DIR$/todo-list/vendor/zircote/swagger-php" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
