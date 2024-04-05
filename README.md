@@ -4,7 +4,7 @@
 ## Установка
 Клонировать репозиторий:
 ``` 
-git clone <>
+git clone https://github.com/Lepessov/todo_list.git
 ```
 Скрипт для запуска всех необходимых комманд:
 ````
