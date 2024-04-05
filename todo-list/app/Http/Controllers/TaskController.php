@@ -5,41 +5,49 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use App\Traits\ApiResponse;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 class TaskController extends Controller
 {
-    public function index()
+    use ApiResponse;
+
+    public function index(): JsonResponse
     {
         $tasks = Task::all();
-        return response()->json($tasks);
+
+        return $this->successResponse($tasks);
     }
 
-    public function store(CreateTaskRequest $request)
+    public function store(CreateTaskRequest $request): JsonResponse
     {
         $task = Task::create($request->validated());
-        return response()->json($task, 201);
+
+        return $this->successResponse($task);
     }
 
-    public function show($id)
+    public function show($id): JsonResponse
     {
         $task = Task::findOrFail($id);
-        return response()->json($task);
+
+        return $this->successResponse($task);
     }
 
-    public function update(UpdateTaskRequest $request, $id)
+    public function update(UpdateTaskRequest $request, $id): JsonResponse
     {
         $task = Task::findOrFail($id);
 
         $task->update($request->validated());
-        return response()->json($task);
+
+        return $this->successResponse($task);
     }
 
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
         $task = Task::findOrFail($id);
         $task->delete();
-        return response()->json(null, 204);
+
+        return $this->successResponse([]);
     }
 }
