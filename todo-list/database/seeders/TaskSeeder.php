@@ -13,24 +13,8 @@ class TaskSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
-        Task::create([
-            'title' => 'Task 1',
-            'description' => 'Description for Task 1',
-            'status' => 'todo',
-        ]);
-
-        Task::create([
-            'title' => 'Task 2',
-            'description' => 'Description for Task 2',
-            'status' => 'in_progress',
-        ]);
-
-        Task::create([
-            'title' => 'Task 3',
-            'description' => 'Description for Task 3',
-            'status' => 'done',
-        ]);
+        Task::factory()->count(50)->create();
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contracts\APIMessageEntity;
 use App\Http\Requests\CreateTaskRequest;
+use App\Http\Requests\TaskFilterRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use App\Traits\ApiResponse;
@@ -15,9 +16,22 @@ class TaskController extends Controller
 {
     use ApiResponse;
 
-    public function index(): JsonResponse
+    public function index(TaskFilterRequest $request): JsonResponse
     {
-        $tasks = Task::all();
+        $validatedData = $request->validated();
+
+        $status = $validatedData['status'] ?? null;
+
+        $sortField = $validatedData['sort_field'] ?? 'created_at';
+        $sortDirection = $validatedData['sort_direction'] ?? 'asc';
+        $tasks = Task::query();
+
+        if ($status) {
+            $tasks->where('status', $status);
+        }
+
+        $tasks->orderBy($sortField, $sortDirection);
+        $tasks = $tasks->paginate($validatedData['per_page'] ?? 10)->items();
 
         return $this->successResponse($tasks);
     }
